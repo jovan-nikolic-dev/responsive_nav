@@ -1,7 +1,13 @@
+$breakpoint-tablet: 720px;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+	background-color: lightgray;
 }
 
 .container {
@@ -10,8 +16,6 @@
   margin: 0 auto;
   padding: 0 30px;
 }
-
-
 
 .nav-bar {
 	background-color: #000;
@@ -22,6 +26,11 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		position: relative;
+
+		// @media(max-width: $breakpoint-tablet) {
+		// 	// display: none;
+		// }
 
 		& .nav-links {
 			list-style: none;
@@ -33,12 +42,20 @@
 				& a {
 					color: inherit;
 					text-decoration: none;
+
 				}
 			}
 		}
 
 
 		& .burger-btn {
+			display: none;
+			cursor: pointer;
+
+			@media(max-width: $breakpoint-tablet) {
+				display: block;
+			}
+
 			border: 1px solid cyan;
 			padding: 10px 1px;
 
@@ -78,15 +95,75 @@
 			}
 			&:hover .burger-line::before {
 				top: 0;
-				transform: rotate(45deg);
+				transform: rotate(135deg);
 			}
 			&:hover .burger-line::after {
 				bottom: 0;
-				transform: rotate(-45deg);
+				transform: rotate(-135deg);
 			}
 		}
 
+		// @media(min-width: $breakpoint-tablet) {
+		// 	.nav-links-wrapper {
+		// 		transition: 0s;
+		// 	}
+		// }
 
+		.nav-links-wrapper {
+
+		}
+
+		@media(max-width: $breakpoint-tablet) {
+			.nav-links-wrapper {
+				z-index: -1;
+				position: absolute;
+				// top: 60px;
+				top: 100%;
+				left: 100vh;
+				background-color: gray;
+				margin-left: -30px;
+				width: calc(100% + 60px);
+				// display: none;
+				// transform: translateY(calc(-100% - 60px));
+				// transition: 0.3s;  
+
+				&.nav-active {
+					// display: block;
+					// transform: translateY(0);
+					animation-name: mymove;
+					animation-duration: 1s;
+					animation-timing-function: ease-out;
+					animation-fill-mode: forwards;
+				}
+				@keyframes mymove {
+					from { left: 100vh; }
+					to { left: 0; }
+				}
+
+				& .nav-links {
+					display: flex;
+					flex-direction: column;
+					width: 100%;
+					justify-content: center;
+					align-items: flex-start;
+				}
+				& .nav-link {
+					margin-left: 0;
+					width: 100%;
+
+
+					& a {
+						display: inline-block;
+						padding: 16px;
+						width: 100%;
+
+						&:hover {
+							background-color: #ddd;
+						}
+					}
+				}
+			}
+		}
 		
 	}
 }
